@@ -1,0 +1,4 @@
+.env
+builds
+iso
+packer_cache
