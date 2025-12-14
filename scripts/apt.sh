@@ -2,8 +2,19 @@
 
 set -e 
 
-mv -v /etc/apt/sources.list.d/pve-enterprise.list /etc/apt/sources.list.d/pve-enterprise.list.disabled
-mv -v /etc/apt/sources.list.d/ceph.list /etc/apt/sources.list.d/ceph.list.disabled
+repo_dir="/etc/apt/sources.list.d"
+repos=("pve-enterprise" "ceph")
+
+for repo in "${repos[@]}"; do
+    find "$repo_dir" -maxdepth 1 -type f -name "*$repo*" | while IFS= read -r file_path; do
+        file_name=$(basename "$file_path")
+        
+        if [[ -n "$file_path" && -f "$file_path" ]]; then
+            new_path="${file_path}.disabled"
+            mv -v "$file_path" "$new_path"
+        fi
+    done
+done
 
 apt-get update
 apt-get upgrade -y

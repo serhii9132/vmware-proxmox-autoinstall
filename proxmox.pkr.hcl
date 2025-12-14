@@ -15,8 +15,6 @@ locals {
     output_directory = "builds/${formatdate("YYYY-MM-DD_hh-mm", timestamp())}"
 
     iso_url = "https://enterprise.proxmox.com/iso"
-    iso_file = "proxmox-ve_8.4-1.iso"
-    iso_checksum = "sha256:d237d70ca48a9f6eb47f95fd4fd337722c3f69f8106393844d027d28c26523d8"
     iso_source = "./iso"
 
     answer_filename = "answer.toml"
@@ -24,6 +22,16 @@ locals {
     unattended = {
       "/${local.answer_filename}" = templatefile("${local.http_dir}/answer.toml.pkrtpl.hcl", { var = var })
     }
+}
+
+variable "iso_file" {
+    type = string
+    default = env("ISO_FILE_PROXMOX")
+}
+
+variable "iso_checksum" {
+    type = string
+    default = env("CHECKSUM_ISO_FILE_PROXMOX")
 }
 
 variable "ssh_password" {
@@ -58,9 +66,9 @@ source "vmware-iso" "proxmox" {
   disk_adapter_type              = "scsi"
 
   cdrom_adapter_type             = "sata"
-  iso_url                        = "${local.iso_url}/${local.iso_file}"
-  iso_checksum                   = local.iso_checksum
-  iso_target_path                = abspath("${local.iso_source}/${local.iso_file}")
+  iso_url                        = "${local.iso_url}/${var.iso_file}"
+  iso_checksum                   = "sha256:${var.iso_checksum}"
+  iso_target_path                = abspath("${local.iso_source}/${var.iso_file}")
   output_directory               = abspath("${local.output_directory}")
 
   communicator                   = "ssh"
