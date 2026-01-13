@@ -8,5 +8,6 @@ export PRIVATE_KEY_FILE='D://.ssh//keys//key.pem'
 ```
 2. Run build:
 ```sh
-make proxmox
+make proxmox-8
+make proxmox-9
 ```
