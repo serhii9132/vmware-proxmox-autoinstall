@@ -57,6 +57,7 @@ source "vmware-iso" "proxmox" {
   skip_export                    = true
   guest_os_type                  = "debian12-64"
   vm_name                        = "proxmox-auto"
+  vhv_enabled                    = true
 
   cpus                           = 4
   cores                          = 4
