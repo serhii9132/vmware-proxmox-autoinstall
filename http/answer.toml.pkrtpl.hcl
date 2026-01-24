@@ -11,7 +11,13 @@ root-ssh-keys = [
 ]
 
 [network]
-source = "from-dhcp"
+source = "from-answer"
+cidr = "${var.ip}/${var.mask}"
+gateway = "${var.gateway}"
+dns = "8.8.8.8"
+filter.ID_NET_NAME = "ens160"
+filter.ID_VENDOR_FROM_DATABASE = "VMware"
+filter.ID_MODEL_FROM_DATABASE = "VMXNET3 Ethernet Controller"
 
 [disk-setup]
 filesystem = "ext4"
