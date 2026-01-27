@@ -1,0 +1,5 @@
+histsize: 10000
+histfilesize: 10000
+histtimeformat: "%d.%m.%Y %H:%M:%S - "
+histcontrol: "ignoreboth:erasedups"
+prompt_command: "history -a"

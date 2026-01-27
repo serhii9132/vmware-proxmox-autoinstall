@@ -1,11 +1,15 @@
 packer {
   required_plugins {
     vmware = {
-      version = "~> 1"
       source = "github.com/hashicorp/vmware"
+      version = "~> 1"
     }
     vagrant = {
       source  = "github.com/hashicorp/vagrant"
+      version = "~> 1"
+    }
+    ansible = {
+      source  = "github.com/hashicorp/ansible"
       version = "~> 1"
     }
   }
@@ -15,7 +19,6 @@ source "vmware-iso" "proxmox" {
   version                        = 21
   firmware                       = "bios"
   headless                       = true
-  vmx_remove_ethernet_interfaces = true
   skip_export                    = true
   guest_os_type                  = var.guest_os_type
   vm_name                        = "proxmox-auto"
@@ -65,10 +68,23 @@ build {
 
   provisioner "shell" {
     scripts = [
-      "./scripts/storage.sh",
-      "./scripts/apt.sh",
-      "./scripts/zero-space.sh"
+      "./provisioning/shell/extend-lvm.sh",
+      "./provisioning/shell/disable-apt-repos.sh",
+      "./provisioning/shell/install-packages.sh"
     ]
+  }
+
+  provisioner "ansible-local" {
+    playbook_file   = "./provisioning/ansible/playbook.yaml"
+    inventory_file  = "./provisioning/ansible/hosts.yaml"
+    host_vars       = "./provisioning/ansible/host_vars"
+    role_paths      = [ "./provisioning/ansible/roles/users" ]
+    galaxy_file     = "./provisioning/ansible/requirements.yaml"
+    extra_arguments = [ "-vvvv" ]
+  }
+
+  provisioner "shell" {
+    script = "./provisioning/shell/zero-space.sh"
   }
 
   post-processor "vagrant" {

@@ -1,0 +1,11 @@
+---
+- name: Proxmox setup
+  hosts: localhost
+  gather_facts: true
+  roles:
+    - serhii9132.base_layer.common
+    - serhii9132.base_layer.packages
+    - serhii9132.base_layer.ssh
+    - serhii9132.base_layer.git
+    - users
+  

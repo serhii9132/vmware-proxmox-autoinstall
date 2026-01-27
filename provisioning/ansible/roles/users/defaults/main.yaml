@@ -1,0 +1,4 @@
+sudo_user: ""
+sudo_user_pass: ""
+ssh_pub_key: ""
+ssh_group: "{{ base_layer_ssh_group | default('sshusers') }}"

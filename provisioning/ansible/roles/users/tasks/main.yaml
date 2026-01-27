@@ -1,0 +1,14 @@
+---
+- name: Append root to {{ ssh_group }}
+  ansible.builtin.user:
+    name: root
+    groups: "{{ ssh_group }}"
+    append: true
+
+- name: Copy .bashrc from template
+  ansible.builtin.template:
+    src: bashrc.j2
+    dest: "/root/.bashrc"
+    owner: root
+    group: root
+    mode: '644'
