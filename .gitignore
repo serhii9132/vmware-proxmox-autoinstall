@@ -2,3 +2,5 @@
 .cache
 artifacts
 packer_cache
+host_vars
+logs
