@@ -15,7 +15,3 @@ for repo in "${repos[@]}"; do
         fi
     done
 done
-
-apt-get update
-apt-get upgrade -y
-apt install -y open-vm-tools
