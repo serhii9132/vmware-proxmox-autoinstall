@@ -1,6 +1,6 @@
 ---
 collections:
  - name: serhii9132.base_layer
-   version: 1.0.10
+   version: 1.0.11
  - name: serhii9132.proxmox_bootstrap
    version: 1.0.1

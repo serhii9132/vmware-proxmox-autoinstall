@@ -9,6 +9,5 @@
     - serhii9132.base_layer.common
     - serhii9132.base_layer.utilities
     - serhii9132.proxmox_bootstrap.ssh
-    # - serhii9132.base_layer.git
     - serhii9132.proxmox_bootstrap.accounts
-  
+    - serhii9132.base_layer.bash_aliases

@@ -46,7 +46,7 @@ source "vmware-iso" "proxmox" {
   vnc_bind_address               = "127.0.0.1"
   vnc_port_min                   = 5963
   vnc_port_max                   = 5963
-  vnc_disable_password           = true
+  vnc_disable_password           = false
   
   ssh_host                       = var.ip
   ssh_username                   = "root"
@@ -78,7 +78,8 @@ build {
     inventory_file  = "./provisioning/ansible/hosts.yaml"
     host_vars       = "./provisioning/ansible/host_vars"
     galaxy_file     = "./provisioning/ansible/requirements.yaml"
-    extra_arguments = [ "-vvvv" ]
+    extra_arguments = [ "-vv" ]
+    command         = "ANSIBLE_STDOUT_CALLBACK=yaml ansible-playbook"
   }
 
   provisioner "shell" {
